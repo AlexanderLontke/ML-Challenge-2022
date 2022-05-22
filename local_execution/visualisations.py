@@ -1,3 +1,4 @@
+from locale import normalize
 from typing import List
 from rasterio.plot import reshape_as_image
 
@@ -47,10 +48,10 @@ def plot_confusion_matrix(y_true: List[int], y_pred: List[int]) -> None:
     :return: None; show plot
     """
     classes_in_order = [v for k, v in sorted(classes_to_label.items())]
-    cm = confusion_matrix(y_true, y_pred)
+    cm = confusion_matrix(y_true, y_pred, normalize='true')
 
     df_confusion_matrix = pd.DataFrame(
-        cm / np.sum(cm) * 10,
+        cm,
         index=classes_in_order,
         columns=classes_in_order
     )
